@@ -1,0 +1,23 @@
+U2NETP / U²-Net — local background removal
+
+U²-Net: Going Deeper with Nested U-Structure for Salient Object Detection
+Xuebin Qin, Zichen Zhang, Chenyang Huang, Masood Dehghan,
+Osmar R. Zaiane, Martin Jagersand (2020).
+Original project: https://github.com/xuebinqin/U-2-Net
+License: Apache-2.0; see U2NET-LICENSE.txt.
+
+Unmodified ONNX weights distributed by Daniel Gatis / rembg:
+https://github.com/danielgatis/rembg/releases/download/v0.0.0/u2netp.onnx
+rembg project: https://github.com/danielgatis/rembg
+License for rembg: MIT; see REMBG-LICENSE.txt.
+Expected upstream MD5: 8e83ca70e441ab06c318d82300c84806
+
+The Macdora TypeScript preprocessing and mask composition implement the
+normalization described by rembg's U2netpSession (320 x 320 RGB, ImageNet
+mean/std, min/max output normalization). Inference runs in a Web Worker
+using ONNX Runtime Web 1.23.2 (Microsoft, MIT).
+See ONNXRUNTIME-LICENSE.txt for the runtime's license.
+https://github.com/microsoft/onnxruntime
+
+The lightweight model may need manual refinement on fine hair, translucent
+objects, or complex backgrounds. No remote inference API is called.
