@@ -1,0 +1,27 @@
+BiRefNet Lite — optional high-detail local background removal
+
+Original model: ZhengPeng7/BiRefNet_lite
+https://huggingface.co/ZhengPeng7/BiRefNet_lite
+Original code: https://github.com/ZhengPeng7/BiRefNet
+ONNX conversion: https://huggingface.co/studioludens/birefnet-lite-512
+Both original and ONNX model cards declare MIT. Usage, modification, commercial
+use and redistribution are permitted with the included MIT copyright/license
+notice; see BIREFNET-LICENSE.txt and BIREFNET-ONNX-LICENSE.txt. No paid inference service is used.
+
+Pinned ONNX revision: 962e67969ec6acec9c19fab76acee4f5e22e990c
+File: onnx/model.onnx (FP32, 191877254 bytes)
+SHA-256 (upstream Git LFS):
+1cb0fb360dadd15af77c639085d77a9df67db0c64315560c3de005f676345ac2
+
+Input: RGB stretched to 512x512, [0,1] then ImageNet mean/std.
+Output: single-channel logits, sigmoid before alpha upsampling.
+Runtime: ONNX Runtime Web 1.23.2 (MIT, see ONNXRUNTIME-LICENSE.txt),
+single-thread WASM in a cancellable Web Worker. FP16 is not selected because
+operator/type support varies in browser WASM. IS-Net/DIS is not included.
+
+The weights are fetched directly from the immutable Hugging Face URL only when
+Detail tinggi runs, verified using SHA-256, then cached locally when storage
+permits. Only the model is downloaded; photos and masks are never uploaded.
+MIT permits redistributing these weights, but the 192 MB file is not committed
+to Git or the public Pages build. The model and license sources above were
+reviewed during implementation; source metadata is recorded in docs/background-removal.md.
