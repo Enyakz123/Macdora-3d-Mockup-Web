@@ -1,0 +1,38 @@
+ViTMatte Small — optional local Super detail alpha matting
+
+Model: hustvl/vitmatte-small-distinctions-646
+https://huggingface.co/hustvl/vitmatte-small-distinctions-646
+Upstream model-card revision: 6a0e75d7214b01f4d1163ede0f15b23afbbd480b
+The original model card declares Apache-2.0 for the weights. This permits use
+and redistribution, including commercial use, subject to the license terms.
+The ViTMatte project code is separately MIT (Copyright 2023 Hust Vision Lab).
+See VITMATTE-WEIGHTS-LICENSE.txt and VITMATTE-CODE-LICENSE.txt.
+
+Authors: Jingfeng Yao, Xinggang Wang, Shusheng Yang, Baoyuan Wang.
+Paper: ViTMatte: Boosting Image Matting with Pretrained Plain Vision Transformers
+https://arxiv.org/abs/2305.15272
+Original code: https://github.com/hustvl/ViTMatte
+ONNX format conversion: https://huggingface.co/Xenova/vitmatte-small-distinctions-646
+This is the original trained model in ONNX format; Macdora does not modify weights.
+
+Pinned ONNX revision: 358d428c452e5e0cd52955011a8b51944731d28e
+File: onnx/model.onnx, FP32, 103885865 bytes
+SHA-256 (upstream Git LFS):
+a1cf48234c369faa3ea1711981d961fe1ec71f51e593f9d6553aa5a0e7d557e3
+
+Input: RGB /255, then mean/std .5; concatenate trimap /255 as fourth channel.
+Pad bottom/right with zeros to a multiple of 32. Output is alpha, not logits:
+no sigmoid or per-image min/max normalization. Macdora limits the longest
+working side to 1024 pixels without changing the saved/exported photo size.
+
+Macdora first obtains automatic foreground/background seeds from BiRefNet Lite,
+then estimates continuous alpha in the uncertain edge band with ViTMatte.
+Seed quality limits the result: this does not guarantee recovery of missing
+hair or transparency deep inside a region classified as opaque foreground.
+Super detail is experimental and is not always better for every photograph.
+
+ONNX Runtime Web 1.23.2 (MIT) uses WebGPU when selected/available, with WASM CPU
+fallback in Auto mode. The first BiRefNet stage uses CPU. Some WebGPU graph
+operators may also execute on CPU. No CUDA installation or paid API is needed.
+Downloads are on-demand, immutable, SHA-256 checked and cached. Photos are
+processed locally; no photo or alpha data is sent to inference servers.
